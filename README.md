@@ -1,7 +1,6 @@
 
-  # Create Unique Design
-
-  This is a code bundle for Create Unique Design. The original project is available at https://www.figma.com/design/fi2wcbV6dkWzYYXE85kk7U/Create-Unique-Design.
+  # YUMMY FOODSTORE
+  This website wwill let you find the right places with the right foodzzz.
 
   ## Running the code
 
