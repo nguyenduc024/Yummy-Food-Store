@@ -1,0 +1,814 @@
+# UI/UX Design Instruction — Retro Monochrome Food Ordering Website
+
+## 1. Project Overview
+
+Design a modern food ordering website where users can browse, compare, and order food or drinks from multiple restaurants, cafés, street-food vendors, and local F&B brands in one place.
+
+The website must prioritize:
+
+* Easy food discovery
+* Fast ordering flow
+* Transparent comparison between restaurants
+* Objective recommendations
+* Retro visual identity
+* Monochrome design system
+* Clear information hierarchy
+* Mobile-first usability
+
+The final website should feel like a nostalgic food directory reimagined for the digital age: stylish, editorial, functional, and conversion-focused.
+
+---
+
+## 2. Core Design Concept
+
+### Main Theme
+
+**Retro Monochrome Food Marketplace**
+
+The interface should combine:
+
+* Old newspaper food columns
+* Vintage diner menus
+* 90s delivery flyers
+* Classic restaurant receipt aesthetics
+* Minimalist monochrome digital product design
+
+The design should not feel childish or overly decorative. It should feel crafted, editorial, sharp, and memorable.
+
+### Visual Mood
+
+The website should feel:
+
+* Retro but modern
+* Clean but expressive
+* Monochrome but not boring
+* Fast but not rushed
+* Food-focused but not visually chaotic
+* Trustworthy and easy to navigate
+
+---
+
+## 3. Target Users
+
+The website serves people who want to order food quickly while still having enough information to make a good choice.
+
+Primary users:
+
+* Office workers ordering lunch
+* Students looking for affordable meals
+* Young adults browsing food options casually
+* People comparing restaurants before ordering
+* Users who value speed, price transparency, and convenience
+
+User mindset:
+
+* “I want to know what is good nearby.”
+* “I want to compare dishes from different restaurants.”
+* “I want to order fast without too many steps.”
+* “I do not want to feel manipulated by fake promotions.”
+* “I want clear prices, delivery fees, ratings, and preparation time.”
+
+---
+
+## 4. UX Goals
+
+The website must optimize for the following goals:
+
+1. Help users find relevant food quickly.
+2. Allow users to compare dishes from different restaurants objectively.
+3. Reduce the number of steps from browsing to checkout.
+4. Make prices, delivery fees, ratings, distance, and estimated delivery time easy to understand.
+5. Make the cart visible and accessible at all times.
+6. Avoid overwhelming users with too many visual distractions.
+7. Create a unique retro monochrome brand experience.
+
+---
+
+## 5. Information Architecture
+
+The website should include these main sections:
+
+### Homepage
+
+Purpose: Introduce the food marketplace and immediately guide users into browsing.
+
+Required sections:
+
+* Hero section with search bar
+* Quick category filters
+* Popular dishes from different restaurants
+* Featured restaurant rows
+* Budget-friendly picks
+* Fast delivery picks
+* New restaurants
+* Customer trust indicators
+* Sticky mini cart preview
+
+### Food Discovery Page
+
+Purpose: Let users browse and compare dishes across restaurants.
+
+Required elements:
+
+* Search bar
+* Filter sidebar or horizontal filter chips
+* Sorting options
+* Dish cards
+* Restaurant cards
+* Price, rating, delivery time, and distance indicators
+* Objective comparison labels
+* Add-to-cart button
+
+### Restaurant Detail Page
+
+Purpose: Show one restaurant’s menu clearly.
+
+Required sections:
+
+* Restaurant header
+* Rating and number of reviews
+* Delivery time
+* Delivery fee
+* Minimum order value
+* Menu categories
+* Dish list
+* Recommended dishes
+* Customer reviews
+* Restaurant information
+* Sticky cart button
+
+### Dish Detail Modal or Page
+
+Purpose: Help users inspect a dish before adding it to cart.
+
+Required elements:
+
+* Dish image or stylized monochrome food illustration
+* Dish name
+* Restaurant name
+* Price
+* Description
+* Ingredients
+* Portion size
+* Customization options
+* Add-ons
+* Quantity selector
+* Add-to-cart CTA
+
+### Cart Page / Cart Drawer
+
+Purpose: Let users review and adjust their order quickly.
+
+Required elements:
+
+* Selected dishes
+* Restaurant grouping
+* Quantity controls
+* Item price
+* Delivery fee
+* Service fee
+* Voucher or promo code area
+* Estimated delivery time
+* Total price
+* Checkout button
+
+### Checkout Page
+
+Purpose: Complete the order with minimum friction.
+
+Required sections:
+
+* Delivery address
+* Contact information
+* Payment method
+* Order summary
+* Delivery instructions
+* Final total
+* Place order button
+
+### Order Tracking Page
+
+Purpose: Keep users informed after ordering.
+
+Required elements:
+
+* Order status timeline
+* Estimated arrival time
+* Restaurant preparation status
+* Delivery status
+* Driver information placeholder
+* Support button
+
+---
+
+## 6. Layout Direction
+
+### Overall Layout
+
+Use a structured, editorial layout inspired by vintage food magazines and newspaper grids.
+
+Recommended structure:
+
+* Strong grid system
+* Clear content blocks
+* Bold typographic headers
+* Card-based browsing
+* Sticky navigation
+* Sticky cart panel on desktop
+* Bottom cart bar on mobile
+
+### Desktop Layout
+
+Use a 12-column grid.
+
+Recommended desktop layout:
+
+* Top navigation: full width
+* Hero: large left-aligned headline, search module, supporting retro graphic
+* Discovery page: filters on the left, food grid on the right
+* Cart: sticky right-side drawer or floating panel
+
+### Mobile Layout
+
+Use a mobile-first ordering experience.
+
+Recommended mobile layout:
+
+* Top search bar
+* Horizontal category chips
+* Vertical dish cards
+* Sticky bottom cart bar
+* One-hand-friendly CTA placement
+* Large tap targets
+
+---
+
+## 7. Visual Design System
+
+## 7.1 Color Palette
+
+Use a monochrome palette with retro warmth.
+
+Primary palette:
+
+* Ink Black: `#111111`
+* Soft Black: `#1F1F1F`
+* Charcoal: `#333333`
+* Warm Gray: `#77736B`
+* Paper White: `#F6F1E8`
+* Old Receipt Beige: `#E8DDCB`
+* Border Gray: `#C9C1B3`
+
+Accent usage:
+
+* Keep the design mostly monochrome.
+* Accent colors should be extremely limited.
+* If needed, use only one muted retro accent such as faded red, burnt orange, or olive gray.
+* Do not make the website colorful.
+* Food images may contain natural food colors, but the UI itself must remain monochrome.
+
+Suggested accent:
+
+* Muted Stamp Red: `#9B2D20`
+
+Use accent only for:
+
+* Primary CTA
+* Selected filter
+* Important warning
+* Promotion stamp
+* Order status highlight
+
+---
+
+## 7.2 Typography
+
+Use typography that feels retro, editorial, and readable.
+
+Recommended type direction:
+
+* Display font: bold condensed serif or vintage-inspired slab serif
+* Body font: clean sans-serif
+* Numeric font: monospace or receipt-style font for prices and order details
+
+Typography hierarchy:
+
+### H1
+
+Large, bold, editorial.
+
+Example:
+
+`ORDER GOOD FOOD WITHOUT THE NOISE.`
+
+### H2
+
+Strong section titles.
+
+Example:
+
+`Today’s Straightforward Picks`
+
+### Body Text
+
+Readable and practical.
+
+Example:
+
+`Compare price, distance, delivery time, and rating before you order.`
+
+### Price Text
+
+Use monospace styling.
+
+Example:
+
+`45,000₫`
+
+---
+
+## 7.3 Graphic Style
+
+Use retro-inspired visual elements:
+
+* Receipt-like borders
+* Newspaper column dividers
+* Ticket-shaped cards
+* Stamp badges
+* Halftone textures
+* Simple line illustrations
+* Grainy paper background
+* Monochrome food doodles
+* Vintage menu board layouts
+
+Avoid:
+
+* Overly glossy gradients
+* Neon colors
+* Cartoonish food mascots
+* Generic food delivery app visuals
+* Excessive shadows
+* Overdesigned 3D assets
+
+---
+
+## 8. Component Design
+
+## 8.1 Navigation Bar
+
+The navigation should be simple and functional.
+
+Required items:
+
+* Logo
+* Search
+* Categories
+* Restaurants
+* Deals
+* Order tracking
+* Cart
+
+Design direction:
+
+* Retro diner menu bar
+* Thin borders
+* Monochrome icon system
+* Sticky on scroll
+* Minimal but distinctive
+
+---
+
+## 8.2 Hero Section
+
+The hero section must communicate the product value immediately.
+
+Required content:
+
+Headline:
+
+`Browse food from every corner. Order without confusion.`
+
+Subheadline:
+
+`Compare restaurants, prices, delivery time, and ratings in one clean retro marketplace.`
+
+Primary CTA:
+
+`Start Ordering`
+
+Secondary CTA:
+
+`Browse Restaurants`
+
+Hero search placeholder:
+
+`Search for phở, coffee, rice, milk tea...`
+
+Visual direction:
+
+* Use a retro newspaper-style food board
+* Include monochrome food illustrations
+* Use a large search module as the main interaction
+* Add a small receipt-style order preview card
+
+---
+
+## 8.3 Category Chips
+
+Categories should help users browse quickly.
+
+Suggested categories:
+
+* Rice
+* Noodles
+* Coffee
+* Milk Tea
+* Fast Food
+* Healthy
+* Street Food
+* Dessert
+* Breakfast
+* Late Night
+
+Design direction:
+
+* Pill-shaped or ticket-shaped chips
+* Selected state should be clear
+* Use icons only if they remain visually simple
+* Support horizontal scrolling on mobile
+
+---
+
+## 8.4 Dish Card
+
+Dish cards are the most important component.
+
+Each dish card must include:
+
+* Dish image or monochrome illustration
+* Dish name
+* Restaurant name
+* Price
+* Rating
+* Delivery time
+* Distance
+* Short description
+* Add button
+* Objective comparison label
+
+Example labels:
+
+* `Best value`
+* `Fastest delivery`
+* `Top rated`
+* `Lowest delivery fee`
+* `Popular nearby`
+
+Important rule:
+
+Do not make sponsored dishes look like objective recommendations. If a dish is sponsored, label it clearly as `Sponsored`.
+
+Design direction:
+
+* Receipt-card style
+* Strong border
+* Clear price
+* Compact but readable
+* Add-to-cart button must be obvious
+* Use consistent card heights when possible
+
+---
+
+## 8.5 Restaurant Card
+
+Each restaurant card must include:
+
+* Restaurant name
+* Cuisine type
+* Rating
+* Number of reviews
+* Distance
+* Estimated delivery time
+* Delivery fee
+* Minimum order
+* Open/closed status
+* Top 3 popular dishes
+
+Design direction:
+
+* Looks like a vintage business directory listing
+* Prioritize information clarity
+* Use small badges for delivery speed and rating
+
+---
+
+## 8.6 Filter System
+
+The filter system must help users make objective choices.
+
+Required filters:
+
+* Cuisine type
+* Price range
+* Rating
+* Delivery time
+* Delivery fee
+* Distance
+* Open now
+* Promotion
+* Dietary preference
+* Restaurant type
+
+Sorting options:
+
+* Recommended
+* Fastest delivery
+* Lowest price
+* Highest rating
+* Nearest
+* Lowest delivery fee
+* Most ordered
+
+Important UX rule:
+
+Filters should not feel hidden. Users must understand why they are seeing certain results.
+
+Add a small explanation under sorting:
+
+`Sorted by delivery speed, price, rating, and distance.`
+
+---
+
+## 8.7 Cart Experience
+
+The cart must always be easy to access.
+
+Desktop:
+
+* Use sticky right-side cart drawer or floating mini cart.
+
+Mobile:
+
+* Use sticky bottom cart bar.
+
+Cart preview should show:
+
+* Number of items
+* Total price
+* Restaurant count
+* Checkout CTA
+
+If users add food from multiple restaurants, clearly explain:
+
+`Your order contains items from 2 restaurants. Delivery fees may be calculated separately.`
+
+---
+
+## 8.8 Checkout Experience
+
+Checkout must be simple and reassuring.
+
+Recommended checkout steps:
+
+1. Confirm address
+2. Review order
+3. Choose payment
+4. Place order
+
+Avoid long checkout flows.
+
+Important information must be visible before payment:
+
+* Food subtotal
+* Delivery fee
+* Service fee
+* Discount
+* Final total
+* Estimated delivery time
+
+CTA copy:
+
+`Place Order`
+
+Alternative CTA:
+
+`Confirm & Pay`
+
+---
+
+## 9. User Flow
+
+Main user flow:
+
+1. User lands on homepage.
+2. User searches for a dish or chooses a category.
+3. User browses dishes from multiple restaurants.
+4. User compares price, rating, delivery time, and distance.
+5. User opens dish detail.
+6. User customizes dish.
+7. User adds item to cart.
+8. User reviews cart.
+9. User checks out.
+10. User tracks order.
+
+The flow must minimize decision fatigue.
+
+---
+
+## 10. Recommendation Logic Display
+
+The website must feel objective and trustworthy.
+
+When recommending food, always show the reason.
+
+Examples:
+
+* `Recommended because it has high rating and low delivery fee.`
+* `Fast pick: usually arrives in 20–25 minutes.`
+* `Budget pick: lower price than similar dishes nearby.`
+* `Popular nearby: frequently ordered within your area.`
+
+Avoid vague labels like:
+
+* `Hot`
+* `Best`
+* `Trending`
+
+Unless there is evidence shown.
+
+---
+
+## 11. Microcopy Guidelines
+
+The website copy should be short, useful, and slightly retro.
+
+Tone:
+
+* Direct
+* Helpful
+* Confident
+* Playful but not childish
+* Honest
+
+Examples:
+
+Search placeholder:
+
+`What are you craving today?`
+
+Empty state:
+
+`No dishes found. Try another craving.`
+
+Cart empty state:
+
+`Your tray is still empty.`
+
+Loading state:
+
+`Finding good food around you...`
+
+Filter helper:
+
+`Narrow it down by price, time, rating, or distance.`
+
+Multi-restaurant warning:
+
+`Items from different restaurants may arrive separately.`
+
+---
+
+## 12. Interaction Design
+
+Use subtle retro-inspired interactions.
+
+Recommended interactions:
+
+* Button press feels like a physical stamp
+* Filter chips slide smoothly
+* Dish card slightly lifts on hover
+* Add-to-cart button changes into quantity stepper
+* Cart drawer slides from right
+* Mobile cart bar expands upward
+* Order status moves like a receipt timeline
+
+Avoid:
+
+* Heavy animation
+* Slow transitions
+* Distracting motion
+* Complex gestures
+
+---
+
+## 13. Accessibility Requirements
+
+The design must be accessible.
+
+Requirements:
+
+* High contrast text
+* Large readable font sizes
+* Clear focus states
+* Keyboard navigation support
+* Minimum tap target size: 44px
+* Do not rely only on color to communicate status
+* Use readable labels for all icons
+* Avoid low-contrast gray text on beige background
+
+---
+
+## 14. Responsive Requirements
+
+The design must work well across:
+
+* Mobile: 360px–430px
+* Tablet: 768px–1024px
+* Desktop: 1280px–1440px
+
+Mobile priority:
+
+* Search
+* Categories
+* Dish cards
+* Sticky cart
+* One-hand checkout
+
+Desktop priority:
+
+* Browsing efficiency
+* Side-by-side comparison
+* Sticky cart
+* Rich filtering
+
+---
+
+## 15. Key Pages to Design
+
+Create designs for the following screens:
+
+1. Homepage
+2. Food discovery / search results page
+3. Restaurant detail page
+4. Dish detail modal
+5. Cart drawer
+6. Checkout page
+7. Order tracking page
+8. Empty state page
+9. Mobile homepage
+10. Mobile checkout
+
+---
+
+## 16. Design Quality Bar
+
+The final design must satisfy these criteria:
+
+* Users can search for food immediately.
+* Users can compare dishes across restaurants easily.
+* Users always know the price, delivery fee, delivery time, and rating.
+* The cart is always accessible.
+* The ordering flow feels fast and low-friction.
+* The retro monochrome identity is strong and consistent.
+* The website looks unique, not like a generic food delivery template.
+* The interface is visually creative but still practical.
+* Sponsored or promoted content is clearly labeled.
+* The design feels trustworthy, objective, and user-first.
+
+---
+
+## 17. Things to Avoid
+
+Do not create:
+
+* A generic colorful food delivery website
+* Overly modern glassmorphism UI
+* Neon cyberpunk visuals
+* Messy food collage layout
+* Too many competing promotions
+* Hidden fees
+* Confusing cart behavior
+* Overloaded dish cards
+* Weak typography hierarchy
+* Low-contrast monochrome UI
+* Fake objective recommendation labels
+
+---
+
+## 18. Final Output Requirements
+
+The AI designer should generate:
+
+* Full website UI concept
+* Desktop and mobile versions
+* Clear component system
+* Retro monochrome visual language
+* Food marketplace homepage
+* Multi-restaurant browsing experience
+* Cart and checkout flow
+* Design tokens for color, typography, spacing, and components
+* Short explanation of the UX decisions
+
+The final result should feel like:
+
+`A vintage food directory rebuilt as a fast, transparent, modern ordering platform.`
