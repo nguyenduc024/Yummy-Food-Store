@@ -92,7 +92,7 @@ export function RestaurantDetailPage() {
       <div className="border-b-2 border-foreground bg-secondary">
         <div className="max-w-7xl mx-auto px-4 lg:px-8 py-3">
           <div className="flex flex-wrap gap-4 text-sm" style={{ fontFamily: 'var(--font-mono)', fontSize: '12px' }}>
-            <div className="flex items-center gap-1">
+            <div className="flex items-center gap-1" style={{ color: '#d97706' }}>
               <Star size={13} fill="currentColor" />
               <span className="font-bold">{restaurant.rating}</span>
               <span className="text-muted-foreground">({restaurant.reviews.toLocaleString()} đánh giá)</span>
@@ -204,7 +204,7 @@ export function RestaurantDetailPage() {
                         <span style={{ fontFamily: 'var(--font-body)', fontWeight: 600, fontSize: '14px' }}>{review.name}</span>
                         <p className="text-muted-foreground text-xs mt-0.5" style={{ fontFamily: 'var(--font-mono)' }}>{review.date}</p>
                       </div>
-                      <div className="flex items-center gap-0.5">
+                      <div className="flex items-center gap-0.5" style={{ color: '#d97706' }}>
                         {Array.from({ length: review.rating }).map((_, s) => (
                           <Star key={s} size={12} fill="currentColor" />
                         ))}

@@ -61,9 +61,9 @@ export function HomePage() {
                 letterSpacing: '-0.02em',
                 color: '#F6F1E8',
               }}>
-                BROWSE FOOD<br />
-                FROM EVERY<br />
-                <span style={{ color: '#9B2D20' }}>CORNER.</span>
+                CÀNG LƯỚT,<br />
+                CÀNG HÚT<br />
+                <span style={{ color: '#E53E3E' }}>CÀNG NHIỀU FOODS.</span>
               </h1>
 
               {/* Subheadline */}
@@ -73,7 +73,7 @@ export function HomePage() {
 
               {/* Search bar */}
               <form onSubmit={handleSearch}>
-                <div className="flex border-2 border-background/60 focus-within:border-[#9B2D20] transition-colors">
+                <div className="flex border-2 border-background/60 focus-within:border-[#E53E3E] transition-colors">
                   <input
                     type="text"
                     placeholder="Tìm phở, cà phê, cơm tấm, trà sữa..."
@@ -82,7 +82,7 @@ export function HomePage() {
                     className="flex-1 px-4 py-3 bg-transparent outline-none text-background placeholder:text-background/40"
                     style={{ fontFamily: 'var(--font-body)', fontSize: '15px' }}
                   />
-                  <button type="submit" className="px-5 bg-[#9B2D20] text-background hover:bg-[#7a2319] transition-colors flex items-center gap-2">
+                  <button type="submit" className="px-5 bg-[#E53E3E] text-background hover:bg-[#D32F2F] transition-colors flex items-center gap-2">
                     <Search size={18} />
                     <span className="hidden sm:inline" style={{ fontFamily: 'var(--font-mono)', fontSize: '12px', letterSpacing: '0.05em' }}>TÌM</span>
                   </button>
@@ -93,7 +93,7 @@ export function HomePage() {
               <div className="flex gap-3">
                 <button
                   onClick={() => navigate('/discover')}
-                  className="flex items-center gap-2 bg-[#9B2D20] text-background px-5 py-2.5 hover:bg-[#7a2319] transition-colors"
+                  className="flex items-center gap-2 bg-[#E53E3E] text-background px-5 py-2.5 hover:bg-[#D32F2F] transition-colors"
                   style={{ fontFamily: 'var(--font-mono)', fontWeight: 700, fontSize: '13px', letterSpacing: '0.05em' }}
                 >
                   ĐẶT HÀNG NGAY <ArrowRight size={16} />
@@ -144,7 +144,7 @@ export function HomePage() {
                   ))}
                   <div className="flex justify-between border-t border-background/20 pt-2 mt-2">
                     <span style={{ fontFamily: 'var(--font-mono)', fontWeight: 700, fontSize: '13px', color: '#F6F1E8' }}>TỔNG</span>
-                    <span style={{ fontFamily: 'var(--font-mono)', fontWeight: 700, fontSize: '14px', color: '#9B2D20' }}>169,500₫</span>
+                    <span style={{ fontFamily: 'var(--font-mono)', fontWeight: 700, fontSize: '14px', color: '#E53E3E' }}>169,500₫</span>
                   </div>
                 </div>
 
@@ -164,7 +164,7 @@ export function HomePage() {
               ['~22 phút', 'Thời gian giao TB'],
             ].map(([stat, label]) => (
               <div key={stat} className="text-center">
-                <p style={{ fontFamily: 'var(--font-display)', fontWeight: 900, fontSize: '24px', color: '#F6F1E8' }}>{stat}</p>
+                <p style={{ fontFamily: '"Space Grotesk", sans-serif', fontWeight: 900, fontSize: '24px', color: '#F6F1E8' }}>{stat}</p>
                 <p style={{ fontFamily: 'var(--font-mono)', fontSize: '11px', color: 'rgba(246,241,232,0.5)' }}>{label}</p>
               </div>
             ))}
@@ -187,7 +187,6 @@ export function HomePage() {
                 }`}
                 style={{ fontFamily: 'var(--font-mono)', fontSize: '12px', fontWeight: 600, letterSpacing: '0.03em', whiteSpace: 'nowrap' }}
               >
-                <span>{cat.icon}</span>
                 <span>{cat.name}</span>
               </button>
             ))}
@@ -280,7 +279,7 @@ export function HomePage() {
                         <span className="text-xs text-muted-foreground" style={{ fontFamily: 'var(--font-mono)' }}>{dish.deliveryTime}</span>
                       </div>
                     </div>
-                    <div className="flex items-center gap-1 self-center text-xs" style={{ fontFamily: 'var(--font-mono)' }}>
+                    <div className="flex items-center gap-1 self-center text-xs" style={{ fontFamily: 'var(--font-mono)', color: '#d97706' }}>
                       <Star size={10} fill="currentColor" />
                       <span>{dish.rating}</span>
                     </div>

@@ -80,7 +80,7 @@ export function DishDetailModal({ dish, onClose }: DishDetailModalProps) {
 
             {/* Meta */}
             <div className="flex gap-4 text-sm border-y border-dashed border-border py-3" style={{ fontFamily: 'var(--font-mono)', fontSize: '12px' }}>
-              <div className="flex items-center gap-1">
+              <div className="flex items-center gap-1" style={{ color: '#d97706' }}>
                 <Star size={12} fill="currentColor" />
                 <span>{dish.rating}</span>
               </div>
@@ -107,7 +107,7 @@ export function DishDetailModal({ dish, onClose }: DishDetailModalProps) {
             {/* Label reason */}
             {dish.labelReason && (
               <div className="border border-border bg-secondary p-3 text-xs text-muted-foreground" style={{ fontFamily: 'var(--font-mono)' }}>
-                ℹ️ {dish.labelReason}
+                {dish.labelReason}
               </div>
             )}
 

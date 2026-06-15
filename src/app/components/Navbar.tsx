@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router';
-import { Search, ShoppingBasket, MapPin, Menu, X, Utensils } from 'lucide-react';
+import { Search, ShoppingBasket, MapPin, Menu, X } from 'lucide-react';
 import { useCart } from './CartContext';
+import logoYummy from '../../logo/logo_yummy.png';
 
 export function Navbar() {
   const { totalItems, setIsOpen } = useCart();
@@ -23,7 +24,7 @@ export function Navbar() {
       <div className="border-b border-border px-4 py-1 flex items-center justify-between">
         <div className="flex items-center gap-1 text-muted-foreground" style={{ fontFamily: 'var(--font-mono)', fontSize: '11px' }}>
           <MapPin size={11} />
-          <span>Hoàn Kiếm, Hà Nội</span>
+          <span>56 Hoàng Diệu 2, Thủ Đức, TP. Hồ Chí Minh</span>
         </div>
         <div className="text-muted-foreground" style={{ fontFamily: 'var(--font-mono)', fontSize: '11px' }}>
           Giao hàng từ 8:00 – 22:00
@@ -35,11 +36,9 @@ export function Navbar() {
         <div className="max-w-7xl mx-auto flex items-center h-14 gap-6">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2 shrink-0 group">
-            <div className="w-8 h-8 bg-foreground flex items-center justify-center">
-              <Utensils size={16} className="text-background" />
-            </div>
+            <img src={logoYummy} alt="YUMMY logo" className="w-8 h-8 object-contain" />
             <span className="font-display" style={{ fontFamily: 'var(--font-display)', fontWeight: 900, fontSize: '18px', letterSpacing: '-0.02em', lineHeight: 1 }}>
-              THỰC<span className="text-accent">ĐƠN</span>
+              YUM<span style={{ color: '#E53E3E' }}>MY!</span>
             </span>
           </Link>
 
@@ -62,7 +61,7 @@ export function Navbar() {
 
           {/* Desktop nav links */}
           <div className="hidden lg:flex items-center gap-6 text-sm" style={{ fontFamily: 'var(--font-mono)', fontSize: '12px', letterSpacing: '0.05em' }}>
-            <Link to="/discover" className="text-foreground hover:text-accent transition-colors uppercase">Khám Phá</Link>
+            <Link to="/discover?tab=dishes" className="text-foreground hover:text-accent transition-colors uppercase">Khám Phá</Link>
             <Link to="/discover?tab=restaurants" className="text-foreground hover:text-accent transition-colors uppercase">Nhà Hàng</Link>
             <Link to="/discover?tab=deals" className="text-foreground hover:text-accent transition-colors uppercase">Ưu Đãi</Link>
             <Link to="/tracking" className="text-foreground hover:text-accent transition-colors uppercase">Theo Dõi Đơn</Link>
@@ -107,7 +106,7 @@ export function Navbar() {
               </button>
             </form>
             <div className="grid grid-cols-2 gap-2" style={{ fontFamily: 'var(--font-mono)', fontSize: '12px' }}>
-              {[['Khám Phá', '/discover'], ['Nhà Hàng', '/discover?tab=restaurants'], ['Ưu Đãi', '/discover?tab=deals'], ['Theo Dõi', '/tracking']].map(([label, href]) => (
+              {[['Khám Phá', '/discover?tab=dishes'], ['Nhà Hàng', '/discover?tab=restaurants'], ['Ưu Đãi', '/discover?tab=deals'], ['Theo Dõi', '/tracking']].map(([label, href]) => (
                 <Link key={href} to={href} onClick={() => setMobileMenuOpen(false)}
                   className="border border-foreground px-3 py-2 text-center hover:bg-foreground hover:text-background transition-all uppercase tracking-wider">
                   {label}

@@ -87,7 +87,7 @@ export function DishCard({ dish, onSelect }: DishCardProps) {
 
         {/* Meta row */}
         <div className="flex items-center gap-3 pt-1 border-t border-dashed border-border">
-          <div className="flex items-center gap-1 text-xs" style={{ fontFamily: 'var(--font-mono)' }}>
+          <div className="flex items-center gap-1 text-xs" style={{ fontFamily: 'var(--font-mono)', color: '#d97706' }}>
             <Star size={11} fill="currentColor" />
             <span>{dish.rating}</span>
           </div>

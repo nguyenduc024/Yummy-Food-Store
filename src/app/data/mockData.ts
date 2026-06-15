@@ -78,7 +78,7 @@ export const restaurants: Restaurant[] = [
     topDishes: ['Phở Bò Tái', 'Phở Gà', 'Phở Đặc Biệt'],
     image: 'https://images.unsplash.com/photo-1555126634-323283e090fa?w=600&h=400&fit=crop&auto=format',
     description: 'Quán phở truyền thống Hà Nội với nước dùng hầm 24 giờ từ xương bò.',
-    address: '61 Đinh Tiên Hoàng, Hoàn Kiếm, Hà Nội',
+    address: '61 Nguyễn Huệ, Quận 1, TP.HCM',
     categories: [
       {
         name: 'Phở Bò',
@@ -135,7 +135,7 @@ export const restaurants: Restaurant[] = [
     topDishes: ['Bạc Xỉu', 'Cà Phê Trứng', 'Cà Phê Đen Đá'],
     image: 'https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=600&h=400&fit=crop&auto=format',
     description: 'Rang xay tại chỗ, pha phin truyền thống. Không vội, không ào.',
-    address: '39 Đinh Lễ, Hoàn Kiếm, Hà Nội',
+    address: '39 Mạc Thị Bưởi, Quận 1, TP.HCM',
     categories: [
       {
         name: 'Cà Phê Phin',
@@ -186,7 +186,7 @@ export const restaurants: Restaurant[] = [
     topDishes: ['Bánh Mì Đặc Biệt', 'Bánh Mì Gà', 'Bánh Mì Chả Cá'],
     image: 'https://images.unsplash.com/photo-1600688640154-9619e002df30?w=600&h=400&fit=crop&auto=format',
     description: 'Bánh mì Hội An nổi tiếng nhất — vỏ giòn tan, nhân đầy ắp.',
-    address: '115 Trần Cao Vân, Hội An, Quảng Nam',
+    address: '115 Nguyễn Thị Minh Khai, Quận 2, TP.HCM',
     categories: [
       {
         name: 'Bánh Mì',
@@ -210,7 +210,7 @@ export const restaurants: Restaurant[] = [
     topDishes: ['Lẩu Ếch Sả Ớt', 'Lẩu Hải Sản', 'Lẩu Bò Phúc Kiến'],
     image: 'https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=600&h=400&fit=crop&auto=format',
     description: 'Lẩu tươi ngon, nguyên liệu nhập hàng ngày từ chợ đầu mối.',
-    address: '88 Nguyễn Trãi, Thanh Xuân, Hà Nội',
+    address: '88 Nguyễn Đình Chiểu, Quận 3, TP.HCM',
     categories: [
       {
         name: 'Lẩu',

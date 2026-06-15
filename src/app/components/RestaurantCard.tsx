@@ -43,7 +43,7 @@ export function RestaurantCard({ restaurant }: RestaurantCardProps) {
 
         {/* Rating + Meta */}
         <div className="flex flex-wrap gap-3 text-xs border-t border-dashed border-border pt-2" style={{ fontFamily: 'var(--font-mono)' }}>
-          <div className="flex items-center gap-1">
+          <div className="flex items-center gap-1" style={{ color: '#d97706' }}>
             <Star size={11} fill="currentColor" />
             <span className="font-bold">{restaurant.rating}</span>
             <span className="text-muted-foreground">({restaurant.reviews.toLocaleString()})</span>

@@ -32,6 +32,7 @@ export function DiscoveryPage() {
   const categoryParam = searchParams.get('category') || '';
 
   const [activeTab, setActiveTab] = useState<'dishes' | 'restaurants'>(tab === 'restaurants' ? 'restaurants' : 'dishes');
+  const pageTitle = query ? `"${query}"` : activeTab === 'restaurants' ? 'Nhà Hàng' : 'Tất Cả Món Ăn';
   const [sortBy, setSortBy] = useState('recommended');
   const [selectedCuisines, setSelectedCuisines] = useState<string[]>([]);
   const [selectedPrice, setSelectedPrice] = useState<number | null>(null);
@@ -106,7 +107,7 @@ export function DiscoveryPage() {
               ─── KHÁM PHÁ
             </p>
             <h1 style={{ fontFamily: 'var(--font-display)', fontWeight: 900, fontSize: 'clamp(22px, 4vw, 36px)', lineHeight: 1 }}>
-              Tất Cả Món Ăn
+              {pageTitle}
             </h1>
           </div>
         )}
