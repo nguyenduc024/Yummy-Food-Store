@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from 'react-router';
 import { Navbar } from './components/Navbar';
 import { CartDrawer, MobileCartBar } from './components/CartDrawer';
 import { CartProvider } from './components/CartContext';
+import { GlobalChatWidget } from './components/GlobalChatWidget';
 import { HomePage } from './components/HomePage';
 import { DiscoveryPage } from './components/DiscoveryPage';
 import { RestaurantDetailPage } from './components/RestaurantDetailPage';
@@ -28,6 +29,7 @@ export default function App() {
             </Routes>
           </main>
           <CartDrawer />
+          <GlobalChatWidget />
           <MobileCartBar />
         </div>
       </CartProvider>
