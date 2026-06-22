@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router';
-import { Search, ShoppingBasket, MapPin, Menu, X } from 'lucide-react';
+import { Search, ShoppingBasket, MapPin, Menu, X, User, Settings } from 'lucide-react';
 import { useCart } from './CartContext';
+import { useAuth } from './AuthContext';
 import logoYummy from '../../logo/logo_yummy.png';
 
 export function Navbar() {
   const { totalItems, setIsOpen } = useCart();
+  const { isAuthenticated } = useAuth();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const navigate = useNavigate();
@@ -67,19 +69,48 @@ export function Navbar() {
             <Link to="/tracking" className="text-foreground hover:text-accent transition-colors uppercase">Theo Dõi Đơn</Link>
           </div>
 
-          {/* Cart button */}
-          <button
-            onClick={() => setIsOpen(true)}
-            className="ml-auto relative flex items-center gap-2 border-2 border-foreground px-3 py-1.5 hover:bg-foreground hover:text-background transition-all group"
-          >
-            <ShoppingBasket size={16} />
-            <span className="hidden sm:inline text-sm" style={{ fontFamily: 'var(--font-mono)', fontSize: '12px' }}>GIỎ HÀNG</span>
-            {totalItems > 0 && (
-              <span className="absolute -top-2 -right-2 bg-accent text-accent-foreground w-5 h-5 flex items-center justify-center text-xs" style={{ fontFamily: 'var(--font-mono)', fontWeight: 700 }}>
-                {totalItems}
-              </span>
+          {/* Auth + Cart */}
+          <div className="ml-auto flex items-center gap-2">
+            {isAuthenticated ? (
+              <>
+                <Link
+                  to="/settings"
+                  title="Tài khoản"
+                  className="flex items-center justify-center border-2 border-foreground w-9 h-9 hover:bg-foreground hover:text-background transition-all"
+                >
+                  <User size={16} />
+                </Link>
+                <Link
+                  to="/settings"
+                  title="Cài đặt"
+                  className="flex items-center justify-center border-2 border-foreground w-9 h-9 hover:bg-foreground hover:text-background transition-all"
+                >
+                  <Settings size={16} />
+                </Link>
+              </>
+            ) : (
+              <Link
+                to="/auth"
+                className="hidden sm:flex items-center border-2 border-foreground px-3 py-1.5 hover:bg-foreground hover:text-background transition-all"
+                style={{ fontFamily: 'var(--font-mono)', fontSize: '11px', letterSpacing: '0.03em', fontWeight: 700 }}
+              >
+                ĐĂNG KÝ / ĐĂNG NHẬP
+              </Link>
             )}
-          </button>
+
+            <button
+              onClick={() => setIsOpen(true)}
+              className="relative flex items-center gap-2 border-2 border-foreground px-3 py-1.5 hover:bg-foreground hover:text-background transition-all group"
+            >
+              <ShoppingBasket size={16} />
+              <span className="hidden sm:inline text-sm" style={{ fontFamily: 'var(--font-mono)', fontSize: '12px' }}>GIỎ HÀNG</span>
+              {totalItems > 0 && (
+                <span className="absolute -top-2 -right-2 bg-accent text-accent-foreground w-5 h-5 flex items-center justify-center text-xs" style={{ fontFamily: 'var(--font-mono)', fontWeight: 700 }}>
+                  {totalItems}
+                </span>
+              )}
+            </button>
+          </div>
 
           {/* Mobile menu toggle */}
           <button
@@ -113,6 +144,25 @@ export function Navbar() {
                 </Link>
               ))}
             </div>
+            {!isAuthenticated ? (
+              <Link
+                to="/auth"
+                onClick={() => setMobileMenuOpen(false)}
+                className="block border-2 border-foreground px-3 py-2.5 text-center hover:bg-foreground hover:text-background transition-all uppercase tracking-wider"
+                style={{ fontFamily: 'var(--font-mono)', fontSize: '12px', fontWeight: 700 }}
+              >
+                Đăng Ký / Đăng Nhập
+              </Link>
+            ) : (
+              <Link
+                to="/settings"
+                onClick={() => setMobileMenuOpen(false)}
+                className="block border-2 border-foreground px-3 py-2.5 text-center hover:bg-foreground hover:text-background transition-all uppercase tracking-wider"
+                style={{ fontFamily: 'var(--font-mono)', fontSize: '12px', fontWeight: 700 }}
+              >
+                Tài Khoản & Cài Đặt
+              </Link>
+            )}
           </div>
         )}
       </nav>
