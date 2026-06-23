@@ -89,6 +89,16 @@ export function updateShipperProfile(userId: string, profile: ShipperProfile): U
   return users[idx];
 }
 
+export function updateUserPassword(phone: string, newPassword: string): boolean {
+  const users = getUsers();
+  const idx = users.findIndex(u => u.phone === phone);
+  if (idx === -1) return false;
+
+  users[idx] = { ...users[idx], password: newPassword };
+  saveUsers(users);
+  return true;
+}
+
 export function getRoleLabel(role: User['role']): string {
   switch (role) {
     case 'customer': return 'Khách hàng';

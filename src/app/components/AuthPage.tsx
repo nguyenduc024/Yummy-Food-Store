@@ -1,11 +1,14 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { useNavigate, useSearchParams } from 'react-router';
 import { ChevronLeft, User, Store, Truck, Eye, EyeOff } from 'lucide-react';
 import { useAuth } from './AuthContext';
+import { OtpPopup } from './OtpPopup';
 import { UserRole } from '../data/authTypes';
 import { validatePhone, formatPhoneInput } from '../utils/phoneValidation';
+import { sendOtp, verifyOtp, clearOtp } from '../services/otpService';
+import { updateUserPassword } from '../services/authStorage';
 
-type AuthStep = 'welcome' | 'login' | 'register-role' | 'register-form';
+type AuthStep = 'welcome' | 'login' | 'register-role' | 'register-form' | 'forgot-phone' | 'forgot-otp' | 'forgot-password';
 
 const ROLES: { role: UserRole; label: string; desc: string; icon: typeof User }[] = [
   { role: 'customer', label: 'Khách hàng', desc: 'Đặt món, theo dõi đơn hàng', icon: User },
@@ -29,7 +32,23 @@ export function AuthPage() {
   const [name, setName] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const [forgotPhone, setForgotPhone] = useState('');
+  const [otpInput, setOtpInput] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmNewPassword, setConfirmNewPassword] = useState('');
+  const [otpVerified, setOtpVerified] = useState(false);
+  const [otpPopup, setOtpPopup] = useState<{ visible: boolean; code: string }>({ visible: false, code: '' });
+
+  const showOtpPopup = useCallback((code: string) => {
+    setOtpPopup({ visible: true, code });
+  }, []);
+
+  const hideOtpPopup = useCallback(() => {
+    setOtpPopup(prev => ({ ...prev, visible: false }));
+  }, []);
 
   const handlePhoneChange = (value: string) => {
     setPhone(formatPhoneInput(value));
@@ -61,6 +80,114 @@ export function AuthPage() {
     }
 
     navigate('/');
+  };
+
+  const handleForgotPhoneChange = (value: string) => {
+    setForgotPhone(formatPhoneInput(value));
+    setError('');
+  };
+
+  const handleOtpChange = (value: string) => {
+    setOtpInput(value.replace(/\D/g, '').slice(0, 6));
+    setError('');
+  };
+
+  const dispatchOtp = () => {
+    const result = sendOtp(forgotPhone);
+    if (!result.success) {
+      setError(result.error!);
+      return false;
+    }
+    showOtpPopup(result.code!);
+    return true;
+  };
+
+  const handleSendOtp = (e: React.FormEvent) => {
+    e.preventDefault();
+    setError('');
+
+    const phoneCheck = validatePhone(forgotPhone);
+    if (!phoneCheck.valid) {
+      setError(phoneCheck.error!);
+      return;
+    }
+
+    setIsSubmitting(true);
+    const sent = dispatchOtp();
+    setIsSubmitting(false);
+
+    if (sent) {
+      setOtpInput('');
+      setStep('forgot-otp');
+    }
+  };
+
+  const handleResendOtp = () => {
+    setError('');
+    setOtpInput('');
+    dispatchOtp();
+  };
+
+  const handleVerifyOtp = (e: React.FormEvent) => {
+    e.preventDefault();
+    setError('');
+
+    if (otpInput.length !== 6) {
+      setError('Vui lòng nhập đủ 6 chữ số OTP');
+      return;
+    }
+
+    const result = verifyOtp(forgotPhone, otpInput);
+    if (!result.valid) {
+      setError(result.error!);
+      return;
+    }
+
+    setOtpVerified(true);
+    setNewPassword('');
+    setConfirmNewPassword('');
+    setStep('forgot-password');
+  };
+
+  const handleResetPassword = (e: React.FormEvent) => {
+    e.preventDefault();
+    setError('');
+
+    if (!otpVerified) {
+      setError('Vui lòng xác thực OTP trước');
+      setStep('forgot-otp');
+      return;
+    }
+
+    if (newPassword.length < 6) {
+      setError('Mật khẩu mới phải có ít nhất 6 ký tự');
+      return;
+    }
+
+    if (newPassword !== confirmNewPassword) {
+      setError('Mật khẩu xác nhận không khớp');
+      return;
+    }
+
+    setIsSubmitting(true);
+    const updated = updateUserPassword(forgotPhone, newPassword);
+    setIsSubmitting(false);
+
+    if (!updated) {
+      setError('Không thể cập nhật mật khẩu. Vui lòng thử lại.');
+      return;
+    }
+
+    clearOtp();
+    setPhone(forgotPhone);
+    setPassword('');
+    setForgotPhone('');
+    setOtpInput('');
+    setNewPassword('');
+    setConfirmNewPassword('');
+    setOtpVerified(false);
+    setStep('login');
+    setSuccessMessage('Đặt lại mật khẩu thành công. Vui lòng đăng nhập.');
   };
 
   const handleRegister = async (e: React.FormEvent) => {
@@ -122,13 +249,28 @@ export function AuthPage() {
 
   const goBack = () => {
     setError('');
-    if (step === 'register-form') setStep('register-role');
+    if (step === 'forgot-password') setStep('forgot-otp');
+    else if (step === 'forgot-otp') setStep('forgot-phone');
+    else if (step === 'forgot-phone') setStep('login');
+    else if (step === 'register-form') setStep('register-role');
     else if (step === 'register-role' || step === 'login') setStep('welcome');
     else navigate(-1);
   };
 
+  const stepTitle: Record<AuthStep, string> = {
+    welcome: 'Xin Chào!',
+    login: 'Đăng Nhập',
+    'register-role': 'Chọn Vai Trò',
+    'register-form': 'Đăng Ký',
+    'forgot-phone': 'Quên Mật Khẩu',
+    'forgot-otp': 'Nhập Mã OTP',
+    'forgot-password': 'Mật Khẩu Mới',
+  };
+
   return (
-    <div className="max-w-lg mx-auto px-4 py-8 pb-16">
+    <>
+      <OtpPopup code={otpPopup.code} visible={otpPopup.visible} onClose={hideOtpPopup} />
+      <div className="max-w-lg mx-auto px-4 py-8 pb-16">
       <button
         onClick={goBack}
         className="flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground transition-colors mb-6"
@@ -142,12 +284,15 @@ export function AuthPage() {
           ─── TÀI KHOẢN
         </p>
         <h1 style={{ fontFamily: 'var(--font-display)', fontWeight: 900, fontSize: '36px', lineHeight: 1 }}>
-          {step === 'welcome' && 'Xin Chào!'}
-          {step === 'login' && 'Đăng Nhập'}
-          {step === 'register-role' && 'Chọn Vai Trò'}
-          {step === 'register-form' && 'Đăng Ký'}
+          {stepTitle[step]}
         </h1>
       </div>
+
+      {successMessage && (
+        <div className="mb-6 border-2 border-foreground bg-secondary px-4 py-3 text-sm" style={{ fontFamily: 'var(--font-mono)', fontSize: '12px' }}>
+          {successMessage}
+        </div>
+      )}
 
       {error && (
         <div className="mb-6 border-2 border-accent bg-accent/10 px-4 py-3 text-sm" style={{ fontFamily: 'var(--font-mono)', fontSize: '12px' }}>
@@ -168,7 +313,7 @@ export function AuthPage() {
             ĐĂNG KÝ TÀI KHOẢN
           </button>
           <button
-            onClick={() => { setStep('login'); setError(''); }}
+            onClick={() => { setStep('login'); setError(''); setSuccessMessage(''); }}
             className="w-full border-2 border-foreground py-3 hover:bg-foreground hover:text-background transition-colors"
             style={{ fontFamily: 'var(--font-mono)', fontWeight: 700, fontSize: '13px', letterSpacing: '0.05em' }}
           >
@@ -227,6 +372,15 @@ export function AuthPage() {
           </div>
 
           <button
+            type="button"
+            onClick={() => { setForgotPhone(phone); setError(''); setStep('forgot-phone'); }}
+            className="text-sm text-accent hover:underline w-full text-right"
+            style={{ fontFamily: 'var(--font-mono)', fontSize: '11px' }}
+          >
+            Quên mật khẩu?
+          </button>
+
+          <button
             type="submit"
             disabled={isSubmitting}
             className="w-full bg-foreground text-background py-3 hover:bg-accent transition-colors disabled:opacity-50"
@@ -241,6 +395,126 @@ export function AuthPage() {
               Đăng ký ngay
             </button>
           </p>
+        </form>
+      )}
+
+      {step === 'forgot-phone' && (
+        <form onSubmit={handleSendOtp} className="space-y-4">
+          <p className="text-muted-foreground" style={{ fontFamily: 'var(--font-body)', fontSize: '14px' }}>
+            Nhập số điện thoại đã đăng ký. Hệ thống sẽ gửi mã OTP qua SMS/Email.
+          </p>
+
+          <div>
+            <label className="block mb-1.5" style={{ fontFamily: 'var(--font-mono)', fontSize: '11px', letterSpacing: '0.05em' }}>
+              SỐ ĐIỆN THOẠI
+            </label>
+            <input
+              type="tel"
+              inputMode="numeric"
+              value={forgotPhone}
+              onChange={e => handleForgotPhoneChange(e.target.value)}
+              placeholder="0912345678"
+              className="w-full border-2 border-foreground px-3 py-2.5 bg-transparent outline-none focus:border-accent transition-colors"
+              style={{ fontFamily: 'var(--font-body)', fontSize: '15px' }}
+            />
+            <p className="mt-1 text-muted-foreground" style={{ fontFamily: 'var(--font-mono)', fontSize: '10px' }}>
+              10 chữ số, không chứa ký tự khác
+            </p>
+          </div>
+
+          <button
+            type="submit"
+            disabled={isSubmitting}
+            className="w-full bg-foreground text-background py-3 hover:bg-accent transition-colors disabled:opacity-50"
+            style={{ fontFamily: 'var(--font-mono)', fontWeight: 700, fontSize: '13px', letterSpacing: '0.05em' }}
+          >
+            {isSubmitting ? 'ĐANG GỬI...' : 'GỬI MÃ OTP'}
+          </button>
+        </form>
+      )}
+
+      {step === 'forgot-otp' && (
+        <form onSubmit={handleVerifyOtp} className="space-y-4">
+          <div className="border-2 border-foreground bg-secondary px-4 py-3" style={{ fontFamily: 'var(--font-mono)', fontSize: '12px' }}>
+            Mã OTP đã gửi tới số <strong>{forgotPhone}</strong>
+          </div>
+
+          <div>
+            <label className="block mb-1.5" style={{ fontFamily: 'var(--font-mono)', fontSize: '11px', letterSpacing: '0.05em' }}>
+              MÃ OTP (6 CHỮ SỐ)
+            </label>
+            <input
+              type="text"
+              inputMode="numeric"
+              value={otpInput}
+              onChange={e => handleOtpChange(e.target.value)}
+              placeholder="000000"
+              className="w-full border-2 border-foreground px-3 py-2.5 bg-transparent outline-none focus:border-accent transition-colors tracking-[0.3em] text-center"
+              style={{ fontFamily: 'var(--font-mono)', fontSize: '20px', fontWeight: 700 }}
+            />
+          </div>
+
+          <button
+            type="submit"
+            className="w-full bg-foreground text-background py-3 hover:bg-accent transition-colors"
+            style={{ fontFamily: 'var(--font-mono)', fontWeight: 700, fontSize: '13px', letterSpacing: '0.05em' }}
+          >
+            XÁC NHẬN OTP
+          </button>
+
+          <button
+            type="button"
+            onClick={handleResendOtp}
+            className="w-full border-2 border-foreground py-3 hover:bg-foreground hover:text-background transition-colors"
+            style={{ fontFamily: 'var(--font-mono)', fontWeight: 700, fontSize: '13px', letterSpacing: '0.05em' }}
+          >
+            GỬI LẠI OTP
+          </button>
+        </form>
+      )}
+
+      {step === 'forgot-password' && (
+        <form onSubmit={handleResetPassword} className="space-y-4">
+          <p className="text-muted-foreground" style={{ fontFamily: 'var(--font-body)', fontSize: '14px' }}>
+            OTP hợp lệ. Vui lòng nhập mật khẩu mới.
+          </p>
+
+          <div>
+            <label className="block mb-1.5" style={{ fontFamily: 'var(--font-mono)', fontSize: '11px', letterSpacing: '0.05em' }}>
+              MẬT KHẨU MỚI
+            </label>
+            <input
+              type="password"
+              value={newPassword}
+              onChange={e => setNewPassword(e.target.value)}
+              placeholder="Tối thiểu 6 ký tự"
+              className="w-full border-2 border-foreground px-3 py-2.5 bg-transparent outline-none focus:border-accent transition-colors"
+              style={{ fontFamily: 'var(--font-body)', fontSize: '15px' }}
+            />
+          </div>
+
+          <div>
+            <label className="block mb-1.5" style={{ fontFamily: 'var(--font-mono)', fontSize: '11px', letterSpacing: '0.05em' }}>
+              XÁC NHẬN MẬT KHẨU MỚI
+            </label>
+            <input
+              type="password"
+              value={confirmNewPassword}
+              onChange={e => setConfirmNewPassword(e.target.value)}
+              placeholder="Nhập lại mật khẩu mới"
+              className="w-full border-2 border-foreground px-3 py-2.5 bg-transparent outline-none focus:border-accent transition-colors"
+              style={{ fontFamily: 'var(--font-body)', fontSize: '15px' }}
+            />
+          </div>
+
+          <button
+            type="submit"
+            disabled={isSubmitting}
+            className="w-full bg-foreground text-background py-3 hover:bg-accent transition-colors disabled:opacity-50"
+            style={{ fontFamily: 'var(--font-mono)', fontWeight: 700, fontSize: '13px', letterSpacing: '0.05em' }}
+          >
+            {isSubmitting ? 'ĐANG LƯU...' : 'ĐẶT LẠI MẬT KHẨU'}
+          </button>
         </form>
       )}
 
@@ -361,6 +635,7 @@ export function AuthPage() {
           </button>
         </form>
       )}
-    </div>
+      </div>
+    </>
   );
 }

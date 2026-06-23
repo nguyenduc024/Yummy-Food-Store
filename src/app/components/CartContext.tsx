@@ -1,5 +1,6 @@
 import { createContext, useContext, useState, ReactNode } from 'react';
-import { CartItem } from '../data/mockData';
+import { CartItem, restaurants } from '../data/mockData';
+import { showClosedRestaurantToast } from './ClosedRestaurantToast';
 
 interface CartContextValue {
   items: CartItem[];
@@ -20,6 +21,12 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const [isOpen, setIsOpen] = useState(false);
 
   const addItem = (newItem: CartItem) => {
+    const restaurant = restaurants.find(r => r.id === newItem.restaurantId);
+    if (restaurant && !restaurant.isOpen) {
+      showClosedRestaurantToast(restaurant.name);
+      return;
+    }
+
     setItems(prev => {
       const existing = prev.find(i => i.dishId === newItem.dishId);
       if (existing) {

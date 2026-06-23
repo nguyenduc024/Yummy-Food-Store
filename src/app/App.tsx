@@ -1,3 +1,4 @@
+import { Toaster } from 'sonner';
 import { BrowserRouter, Routes, Route } from 'react-router';
 import { Navbar } from './components/Navbar';
 import { CartDrawer, MobileCartBar } from './components/CartDrawer';
@@ -39,6 +40,16 @@ export default function App() {
             <CartDrawer />
             <GlobalChatWidget />
             <MobileCartBar />
+            <Toaster
+              position="top-right"
+              gap={12}
+              toastOptions={{
+                unstyled: true,
+                classNames: {
+                  toast: '!p-0 !bg-transparent !border-0 !shadow-none',
+                },
+              }}
+            />
           </div>
         </CartProvider>
       </AuthProvider>

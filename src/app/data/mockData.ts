@@ -1,3 +1,8 @@
+import phoBoImg from '../../../assest/phở bò.jpg';
+import phoGaImg from '../../../assest/phở gà.jpg';
+import banhMiHoiAnImg from '../../../assest/bánh mì.jpg';
+import lauEchImg from '../../../assest/lẩu ếch.jpeg';
+
 export interface Restaurant {
   id: string;
   name: string;
@@ -83,15 +88,15 @@ export const restaurants: Restaurant[] = [
       {
         name: 'Phở Bò',
         items: [
-          { id: 'm1', name: 'Phở Bò Tái', price: 65000, description: 'Phở với thịt bò tái mỏng, nước dùng trong vắt', image: 'https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=400&h=300&fit=crop&auto=format', isPopular: true, ingredients: ['Bánh phở', 'Thịt bò tái', 'Hành tươi', 'Húng quế'], portionSize: 'Tô lớn 500ml' },
-          { id: 'm2', name: 'Phở Bò Chín', price: 65000, description: 'Phở với thịt bò chín mềm, nước dùng đậm đà', image: 'https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=400&h=300&fit=crop&auto=format', ingredients: ['Bánh phở', 'Thịt bò chín', 'Hành tây', 'Ngò'], portionSize: 'Tô lớn 500ml' },
+          { id: 'm1', name: 'Phở Bò Tái', price: 65000, description: 'Phở với thịt bò tái mỏng, nước dùng trong vắt', image: phoBoImg, isPopular: true, ingredients: ['Bánh phở', 'Thịt bò tái', 'Hành tươi', 'Húng quế'], portionSize: 'Tô lớn 500ml' },
+          { id: 'm2', name: 'Phở Bò Chín', price: 65000, description: 'Phở với thịt bò chín mềm, nước dùng đậm đà', image: phoBoImg, ingredients: ['Bánh phở', 'Thịt bò chín', 'Hành tây', 'Ngò'], portionSize: 'Tô lớn 500ml' },
           { id: 'm3', name: 'Phở Đặc Biệt', price: 85000, description: 'Tổng hợp bò tái, chín, gầu, gân', image: 'https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=400&h=300&fit=crop&auto=format', isPopular: true, ingredients: ['Bánh phở', 'Bò tái', 'Bò chín', 'Gầu', 'Gân'], portionSize: 'Tô extra lớn 650ml' },
         ],
       },
       {
         name: 'Phở Gà',
         items: [
-          { id: 'm4', name: 'Phở Gà Ta', price: 60000, description: 'Phở gà ta tự nhiên, thịt ngọt mềm', image: 'https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=400&h=300&fit=crop&auto=format', ingredients: ['Bánh phở', 'Gà ta', 'Hành tươi'], portionSize: 'Tô vừa 450ml' },
+          { id: 'm4', name: 'Phở Gà Ta', price: 60000, description: 'Phở gà ta tự nhiên, thịt ngọt mềm', image: phoGaImg, ingredients: ['Bánh phở', 'Gà ta', 'Hành tươi'], portionSize: 'Tô vừa 450ml' },
         ],
       },
     ],
@@ -184,14 +189,14 @@ export const restaurants: Restaurant[] = [
     minOrder: 40000,
     isOpen: false,
     topDishes: ['Bánh Mì Đặc Biệt', 'Bánh Mì Gà', 'Bánh Mì Chả Cá'],
-    image: 'https://images.unsplash.com/photo-1600688640154-9619e002df30?w=600&h=400&fit=crop&auto=format',
+    image: banhMiHoiAnImg,
     description: 'Bánh mì Hội An nổi tiếng nhất — vỏ giòn tan, nhân đầy ắp.',
     address: '115 Nguyễn Thị Minh Khai, Quận 2, TP.HCM',
     categories: [
       {
         name: 'Bánh Mì',
         items: [
-          { id: 'm12', name: 'Bánh Mì Đặc Biệt', price: 45000, description: 'Thịt nướng, chả, pate, rau sống, tương đặc biệt', image: 'https://images.unsplash.com/photo-1600688640154-9619e002df30?w=400&h=300&fit=crop&auto=format', isPopular: true, ingredients: ['Bánh mì', 'Thịt nướng', 'Chả', 'Pate', 'Rau', 'Tương'], portionSize: '1 ổ 25cm' },
+          { id: 'm12', name: 'Bánh Mì Đặc Biệt', price: 45000, description: 'Thịt nướng, chả, pate, rau sống, tương đặc biệt', image: banhMiHoiAnImg, isPopular: true, ingredients: ['Bánh mì', 'Thịt nướng', 'Chả', 'Pate', 'Rau', 'Tương'], portionSize: '1 ổ 25cm' },
         ],
       },
     ],
@@ -208,14 +213,14 @@ export const restaurants: Restaurant[] = [
     minOrder: 200000,
     isOpen: true,
     topDishes: ['Lẩu Ếch Sả Ớt', 'Lẩu Hải Sản', 'Lẩu Bò Phúc Kiến'],
-    image: 'https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=600&h=400&fit=crop&auto=format',
+    image: lauEchImg,
     description: 'Lẩu tươi ngon, nguyên liệu nhập hàng ngày từ chợ đầu mối.',
     address: '88 Nguyễn Đình Chiểu, Quận 3, TP.HCM',
     categories: [
       {
         name: 'Lẩu',
         items: [
-          { id: 'm13', name: 'Lẩu Ếch Sả Ớt', price: 280000, description: 'Lẩu ếch đồng với sả ớt cay nồng (2-3 người)', image: 'https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=400&h=300&fit=crop&auto=format', isPopular: true, ingredients: ['Ếch đồng', 'Sả', 'Ớt', 'Nấm', 'Rau'], portionSize: 'Nồi 2-3 người' },
+          { id: 'm13', name: 'Lẩu Ếch Sả Ớt', price: 280000, description: 'Lẩu ếch đồng với sả ớt cay nồng (2-3 người)', image: lauEchImg, isPopular: true, ingredients: ['Ếch đồng', 'Sả', 'Ớt', 'Nấm', 'Rau'], portionSize: 'Nồi 2-3 người' },
         ],
       },
     ],
@@ -236,7 +241,7 @@ export const dishes: Dish[] = [
     label: 'Top rated',
     labelReason: 'Đánh giá cao nhất trong danh mục Phở tại khu vực của bạn.',
     category: 'noodles',
-    image: 'https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=500&h=350&fit=crop&auto=format',
+    image: phoBoImg,
   },
   {
     id: 'd2',
@@ -296,7 +301,7 @@ export const dishes: Dish[] = [
     label: 'Top rated',
     labelReason: 'Điểm đánh giá 4.9 — cao nhất danh mục Bánh Mì toàn thành phố.',
     category: 'streetfood',
-    image: 'https://images.unsplash.com/photo-1600688640154-9619e002df30?w=500&h=350&fit=crop&auto=format',
+    image: banhMiHoiAnImg,
   },
   {
     id: 'd6',
@@ -338,7 +343,7 @@ export const dishes: Dish[] = [
     distance: '1.2 km',
     description: 'Phở gà ta vườn. Nước dùng ngọt thanh, thịt gà dai mềm vừa phải.',
     category: 'noodles',
-    image: 'https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=500&h=350&fit=crop&auto=format',
+    image: phoGaImg,
   },
 ];
 
