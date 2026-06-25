@@ -9,6 +9,7 @@ import {
   logoutUser as storageLogout,
   updateRestaurantProfile,
   updateShipperProfile,
+  updateUserProfile,
 } from '../services/authStorage';
 
 interface AuthContextValue {
@@ -17,6 +18,7 @@ interface AuthContextValue {
   login: (phone: string, password: string) => { success: boolean; error?: string };
   register: (data: RegisterData) => { success: boolean; user?: User; error?: string; phoneExists?: boolean };
   logout: () => void;
+  updateProfile: (data: { name?: string; address?: string }) => { success: boolean; error?: string };
   completeRestaurantProfile: (profile: RestaurantProfile) => { success: boolean; error?: string };
   completeShipperProfile: (profile: ShipperProfile) => { success: boolean; error?: string };
   refreshUser: () => void;
@@ -36,11 +38,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, [refreshUser]);
 
   const login = (phone: string, password: string) => {
-    const loggedIn = storageLogin(phone, password);
-    if (!loggedIn) {
+    const result = storageLogin(phone, password);
+    if (result.status === 'locked') {
+      const d = new Date(result.lockedAt).toLocaleString('vi-VN');
+      return { success: false, error: `Tài khoản bị khóa từ ${d}. Lý do: ${result.reason}` };
+    }
+    if (result.status === 'invalid') {
       return { success: false, error: 'Số điện thoại hoặc mật khẩu không đúng' };
     }
-    setUser(loggedIn);
+    setUser(result.user);
     return { success: true };
   };
 
@@ -57,6 +63,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const logout = () => {
     storageLogout();
     setUser(null);
+  };
+
+  const updateProfile = (data: { name?: string; address?: string }) => {
+    if (!user) return { success: false, error: 'Chưa đăng nhập' };
+    const updated = updateUserProfile(user.id, data);
+    if (!updated) return { success: false, error: 'Không thể cập nhật' };
+    setUser(updated);
+    return { success: true };
   };
 
   const completeRestaurantProfile = (profile: RestaurantProfile) => {
@@ -83,6 +97,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         login,
         register,
         logout,
+        updateProfile,
         completeRestaurantProfile,
         completeShipperProfile,
         refreshUser,

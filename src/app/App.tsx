@@ -13,7 +13,13 @@ import { OrderTrackingPage } from './components/OrderTrackingPage';
 import { AuthPage } from './components/AuthPage';
 import { ProfileSetupPage } from './components/ProfileSetupPage';
 import { SettingsPage } from './components/SettingsPage';
+import { RestaurantDashboard } from './components/RestaurantDashboard';
+import { ShipperDashboard } from './components/ShipperDashboard';
+import { AdminDashboard } from './components/AdminDashboard';
+import { ensureAdminExists } from './services/authStorage';
 import '../styles/fonts.css';
+
+ensureAdminExists();
 
 /* MARKER-MAKE-KIT-INVOKED */
 /* MARKER-MAKE-KIT-DISCOVERY-READ */
@@ -35,6 +41,9 @@ export default function App() {
                 <Route path="/auth" element={<AuthPage />} />
                 <Route path="/auth/profile-setup" element={<ProfileSetupPage />} />
                 <Route path="/settings" element={<SettingsPage />} />
+                <Route path="/restaurant" element={<RestaurantDashboard />} />
+                <Route path="/shipper" element={<ShipperDashboard />} />
+                <Route path="/admin" element={<AdminDashboard />} />
               </Routes>
             </main>
             <CartDrawer />

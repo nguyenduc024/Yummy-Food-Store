@@ -1,24 +1,83 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
-import { Search, ArrowRight, Star, Clock, Truck, ChevronRight } from 'lucide-react';
+import { ArrowRight, Star, Clock, Truck, ChevronRight, UtensilsCrossed, Coffee, MapPin } from 'lucide-react';
 import { categories, dishes, restaurants } from '../data/mockData';
 import { DishCard } from './DishCard';
 import { RestaurantCard } from './RestaurantCard';
 import { DishDetailModal } from './DishDetailModal';
 import { Dish } from '../data/mockData';
+import bannerImg from '../../../assest/banner.jpg';
+
+function HeroBanner({ className = '' }: { className?: string }) {
+  return (
+    <div className={`relative ${className}`}>
+      {/* Halftone pattern */}
+      <div
+        className="absolute -inset-6 pointer-events-none opacity-[0.12]"
+        style={{
+          backgroundImage: 'radial-gradient(circle, #F6F1E8 1.5px, transparent 1.5px)',
+          backgroundSize: '11px 11px',
+        }}
+      />
+
+      {/* Dashed decorative frame */}
+      <div className="absolute -inset-4 border border-dashed border-background/20 pointer-events-none" />
+
+      {/* Floating icons */}
+      <UtensilsCrossed
+        className="absolute -bottom-4 -left-6 z-20 text-background/30 w-11 h-11 -rotate-12"
+        strokeWidth={1.25}
+      />
+      <Truck
+        className="absolute top-[38%] -right-8 z-20 text-[#9B2C2C]/70 w-9 h-9"
+        strokeWidth={1.25}
+      />
+      <Coffee
+        className="absolute -top-7 left-[18%] z-20 text-background/25 w-8 h-8 rotate-12"
+        strokeWidth={1.25}
+      />
+      <MapPin
+        className="absolute bottom-[18%] -right-5 z-20 text-background/20 w-7 h-7 rotate-6"
+        strokeWidth={1.25}
+      />
+
+      {/* Stamp badges */}
+      <div
+        className="absolute -top-4 -right-1 z-20 border border-background/35 bg-foreground/90 px-2.5 py-1 rotate-6 shadow-[2px_2px_0px_rgba(155,44,44,0.5)]"
+        style={{ fontFamily: 'var(--font-mono)', fontSize: '9px', letterSpacing: '0.12em', color: '#F6F1E8', fontWeight: 700 }}
+      >
+        ★ HOT PICK
+      </div>
+      <div
+        className="absolute -bottom-5 -right-2 z-20 border-2 border-[#9B2C2C]/80 bg-[#E8D4D4] px-3 py-1 -rotate-3 shadow-[3px_3px_0px_#111111]"
+        style={{ fontFamily: 'var(--font-mono)', fontSize: '10px', fontWeight: 700, color: '#9B2C2C', letterSpacing: '0.08em' }}
+      >
+        YUMMY!
+      </div>
+
+      {/* Banner card */}
+      <div
+        className="relative border-2 border-[#F6F1E8]/50 bg-[#F6F1E8] overflow-hidden ring-1 ring-black/10"
+        style={{
+          boxShadow:
+            '10px 10px 0px rgba(155,44,44,0.55), 0 28px 56px rgba(0,0,0,0.45), 0 8px 20px rgba(0,0,0,0.25), inset 0 0 0 1px rgba(255,255,255,0.15)',
+        }}
+      >
+        <img
+          src={bannerImg}
+          alt="Từ bụng réo... đến đơn reo — YUMMY"
+          className="w-full h-auto block"
+          style={{ filter: 'contrast(1.07) saturate(1.05) brightness(1.02)' }}
+        />
+      </div>
+    </div>
+  );
+}
 
 export function HomePage() {
-  const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [selectedDish, setSelectedDish] = useState<Dish | null>(null);
   const navigate = useNavigate();
-
-  const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (searchQuery.trim()) {
-      navigate(`/discover?q=${encodeURIComponent(searchQuery.trim())}`);
-    }
-  };
 
   const handleCategoryClick = (id: string) => {
     setSelectedCategory(id === selectedCategory ? null : id);
@@ -34,7 +93,7 @@ export function HomePage() {
   return (
     <div className="pb-24 lg:pb-0">
       {/* ── HERO ─────────────────────────────────────────────────────── */}
-      <section className="border-b-2 border-foreground bg-foreground text-background relative overflow-hidden">
+      <section className="border-b-2 border-foreground bg-foreground text-background relative overflow-x-hidden">
         {/* Newspaper halftone texture */}
         <div className="absolute inset-0 opacity-5" style={{
           backgroundImage: `radial-gradient(circle, #F6F1E8 1px, transparent 1px)`,
@@ -71,23 +130,7 @@ export function HomePage() {
                 So sánh nhà hàng, giá cả, thời gian giao hàng và đánh giá trong một nơi. Không rác, không nhiễu.
               </p>
 
-              {/* Search bar */}
-              <form onSubmit={handleSearch}>
-                <div className="flex border-2 border-background/60 focus-within:border-[#E53E3E] transition-colors">
-                  <input
-                    type="text"
-                    placeholder="Tìm phở, cà phê, cơm tấm, trà sữa..."
-                    value={searchQuery}
-                    onChange={e => setSearchQuery(e.target.value)}
-                    className="flex-1 px-4 py-3 bg-transparent outline-none text-background placeholder:text-background/40"
-                    style={{ fontFamily: 'var(--font-body)', fontSize: '15px' }}
-                  />
-                  <button type="submit" className="px-5 bg-[#E53E3E] text-background hover:bg-[#D32F2F] transition-colors flex items-center gap-2">
-                    <Search size={18} />
-                    <span className="hidden sm:inline" style={{ fontFamily: 'var(--font-mono)', fontSize: '12px', letterSpacing: '0.05em' }}>TÌM</span>
-                  </button>
-                </div>
-              </form>
+
 
               {/* CTAs */}
               <div className="flex gap-3">
@@ -108,52 +151,15 @@ export function HomePage() {
               </div>
             </div>
 
-            {/* Right: Receipt card */}
-            <div className="hidden lg:block">
-              <div className="border-2 border-background/20 bg-background/5 p-6 backdrop-blur-sm max-w-sm ml-auto">
-                {/* Receipt header */}
-                <div className="text-center border-b border-dashed border-background/20 pb-4 mb-4">
-                  <p style={{ fontFamily: 'var(--font-mono)', fontSize: '11px', letterSpacing: '0.1em', color: 'rgba(246,241,232,0.5)' }}>
-                    ═══════ ORDER PREVIEW ═══════
-                  </p>
-                  <p style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: '18px', color: '#F6F1E8' }}>
-                    Phở Thìn Bờ Hồ
-                  </p>
-                  <p style={{ fontFamily: 'var(--font-mono)', fontSize: '10px', color: 'rgba(246,241,232,0.5)', marginTop: '4px' }}>
-                    1.2km — 20–30 phút
-                  </p>
-                </div>
-
-                {/* Items */}
-                <div className="space-y-2 mb-4">
-                  {[['Phở Bò Tái', '65,000₫'], ['Phở Đặc Biệt', '85,000₫']].map(([name, price]) => (
-                    <div key={name} className="flex justify-between">
-                      <span style={{ fontFamily: 'var(--font-body)', fontSize: '13px', color: 'rgba(246,241,232,0.8)' }}>{name}</span>
-                      <span style={{ fontFamily: 'var(--font-mono)', fontSize: '13px', color: '#F6F1E8' }}>{price}</span>
-                    </div>
-                  ))}
-                </div>
-
-                {/* Totals */}
-                <div className="border-t border-dashed border-background/20 pt-3 space-y-1">
-                  {[['Tạm tính', '150,000₫'], ['Phí giao', '15,000₫'], ['Dịch vụ', '4,500₫']].map(([label, val]) => (
-                    <div key={label} className="flex justify-between">
-                      <span style={{ fontFamily: 'var(--font-mono)', fontSize: '11px', color: 'rgba(246,241,232,0.5)' }}>{label}</span>
-                      <span style={{ fontFamily: 'var(--font-mono)', fontSize: '11px', color: 'rgba(246,241,232,0.7)' }}>{val}</span>
-                    </div>
-                  ))}
-                  <div className="flex justify-between border-t border-background/20 pt-2 mt-2">
-                    <span style={{ fontFamily: 'var(--font-mono)', fontWeight: 700, fontSize: '13px', color: '#F6F1E8' }}>TỔNG</span>
-                    <span style={{ fontFamily: 'var(--font-mono)', fontWeight: 700, fontSize: '14px', color: '#E53E3E' }}>169,500₫</span>
-                  </div>
-                </div>
-
-                <div className="mt-4 flex items-center gap-2 text-xs" style={{ fontFamily: 'var(--font-mono)', color: 'rgba(246,241,232,0.4)', fontSize: '10px' }}>
-                  <span>★★★★★</span>
-                  <span>4.8 · 2,341 đánh giá</span>
-                </div>
-              </div>
+            {/* Right: Banner — +30% (46.08rem → 59.9rem), shift right 30px */}
+            <div className="hidden lg:flex items-center justify-center lg:justify-end translate-x-[40px]">
+              <HeroBanner className="w-full max-w-[70rem]" />
             </div>
+          </div>
+
+          {/* Banner mobile — +30% (144% → 187%) */}
+          <div className="lg:hidden mt-8 px-1 translate-x-[40px]">
+            <HeroBanner className="w-[200%] max-w-none -ml-[43.5%]" />
           </div>
 
           {/* Trust indicators */}

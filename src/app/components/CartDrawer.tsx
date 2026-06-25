@@ -1,14 +1,18 @@
-import { X, Minus, Plus, Trash2, ShoppingBasket, AlertCircle } from 'lucide-react';
+import { X, Minus, Plus, Trash2, ShoppingBasket, AlertCircle, PencilLine } from 'lucide-react';
 import { useCart } from './CartContext';
 import { useNavigate } from 'react-router';
+import { useState } from 'react';
 
 function formatPrice(price: number) {
   return price.toLocaleString('vi-VN') + '₫';
 }
 
 export function CartDrawer() {
-  const { items, isOpen, setIsOpen, updateQuantity, removeItem, totalPrice, totalItems } = useCart();
+  const { items, isOpen, setIsOpen, updateQuantity, updateNote, removeItem, totalPrice, totalItems } = useCart();
   const navigate = useNavigate();
+  const [editingNoteId, setEditingNoteId] = useState<string | null>(null);
+  const [editingNoteText, setEditingNoteText] = useState('');
+  const [confirmDeleteId, setConfirmDeleteId] = useState<string | null>(null);
 
   const restaurantCount = new Set(items.map(i => i.restaurantId)).size;
   const deliveryFee = items.length > 0 ? 15000 : 0;
@@ -73,11 +77,74 @@ export function CartDrawer() {
                   <p className="text-sm mt-1" style={{ fontFamily: 'var(--font-mono)', fontWeight: 700, color: 'var(--accent)' }}>
                     {formatPrice(item.price * item.quantity)}
                   </p>
+
+                  {/* Note section */}
+                  {editingNoteId === item.dishId ? (
+                    <div className="mt-2">
+                      <textarea
+                        value={editingNoteText}
+                        onChange={e => setEditingNoteText(e.target.value)}
+                        placeholder="Ít đường, ít đá, không hành..."
+                        className="w-full border border-border bg-secondary px-2 py-1.5 text-xs outline-none focus:border-foreground transition-colors resize-none"
+                        rows={2}
+                        style={{ fontFamily: 'var(--font-body)' }}
+                        autoFocus
+                      />
+                      <div className="flex gap-1 mt-1">
+                        <button
+                          onClick={() => { updateNote(item.dishId, editingNoteText); setEditingNoteId(null); }}
+                          className="text-xs border border-foreground px-2 py-0.5 hover:bg-foreground hover:text-background transition-all"
+                          style={{ fontFamily: 'var(--font-mono)' }}
+                        >
+                          LƯU
+                        </button>
+                        <button
+                          onClick={() => setEditingNoteId(null)}
+                          className="text-xs border border-border px-2 py-0.5 hover:bg-secondary transition-all text-muted-foreground"
+                          style={{ fontFamily: 'var(--font-mono)' }}
+                        >
+                          HỦY
+                        </button>
+                      </div>
+                    </div>
+                  ) : (
+                    <button
+                      onClick={() => { setEditingNoteId(item.dishId); setEditingNoteText(item.note || ''); }}
+                      className="mt-1.5 flex items-center gap-1 text-muted-foreground hover:text-foreground transition-colors"
+                      style={{ fontFamily: 'var(--font-mono)', fontSize: '11px' }}
+                    >
+                      <PencilLine size={10} />
+                      {item.note ? (
+                        <span className="italic truncate max-w-[140px]">"{item.note}"</span>
+                      ) : (
+                        <span>Thêm ghi chú</span>
+                      )}
+                    </button>
+                  )}
                 </div>
                 <div className="flex flex-col items-end gap-2 shrink-0">
-                  <button onClick={() => removeItem(item.dishId)} className="text-muted-foreground hover:text-accent transition-colors">
-                    <Trash2 size={14} />
-                  </button>
+                  {confirmDeleteId === item.dishId ? (
+                    <div className="flex items-center gap-1">
+                      <button
+                        onClick={() => { removeItem(item.dishId); setConfirmDeleteId(null); }}
+                        className="text-xs border border-accent text-accent px-1.5 py-0.5 hover:bg-accent hover:text-accent-foreground transition-all"
+                        style={{ fontFamily: 'var(--font-mono)' }}
+                      >
+                        XOÁ
+                      </button>
+                      <button
+                        onClick={() => setConfirmDeleteId(null)}
+                        className="text-xs border border-border px-1.5 py-0.5 hover:bg-secondary transition-all text-muted-foreground"
+                        style={{ fontFamily: 'var(--font-mono)' }}
+                      >
+                        GIỮ
+                      </button>
+                    </div>
+                  ) : (
+                    <button onClick={() => setConfirmDeleteId(item.dishId)} className="text-muted-foreground hover:text-accent transition-colors">
+                      <Trash2 size={14} />
+                    </button>
+                  )}
                   <div className="flex items-center gap-1 border border-foreground">
                     <button onClick={() => updateQuantity(item.dishId, item.quantity - 1)} className="w-7 h-7 flex items-center justify-center hover:bg-foreground hover:text-background transition-all">
                       <Minus size={12} />

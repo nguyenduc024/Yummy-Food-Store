@@ -30,6 +30,7 @@ export function AuthPage() {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [name, setName] = useState('');
+  const [address, setAddress] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
@@ -210,6 +211,11 @@ export function AuthPage() {
       return;
     }
 
+    if (selectedRole === 'customer' && !address.trim()) {
+      setError('Vui lòng nhập địa chỉ giao hàng');
+      return;
+    }
+
     if (password.length < 6) {
       setError('Mật khẩu phải có ít nhất 6 ký tự');
       return;
@@ -226,6 +232,7 @@ export function AuthPage() {
       password,
       name: name.trim(),
       role: selectedRole,
+      address: selectedRole === 'customer' ? address.trim() : undefined,
     });
     setIsSubmitting(false);
 
@@ -618,6 +625,25 @@ export function AuthPage() {
               style={{ fontFamily: 'var(--font-body)', fontSize: '15px' }}
             />
           </div>
+
+          {selectedRole === 'customer' && (
+            <div>
+              <label className="block mb-1.5" style={{ fontFamily: 'var(--font-mono)', fontSize: '11px', letterSpacing: '0.05em' }}>
+                ĐỊA CHỈ GIAO HÀNG *
+              </label>
+              <input
+                type="text"
+                value={address}
+                onChange={e => setAddress(e.target.value)}
+                placeholder="Số nhà, tên đường, phường/xã, quận/huyện..."
+                className="w-full border-2 border-foreground px-3 py-2.5 bg-transparent outline-none focus:border-accent transition-colors"
+                style={{ fontFamily: 'var(--font-body)', fontSize: '15px' }}
+              />
+              <p className="mt-1 text-muted-foreground" style={{ fontFamily: 'var(--font-mono)', fontSize: '10px' }}>
+                Địa chỉ mặc định khi đặt hàng, có thể thay đổi khi thanh toán
+              </p>
+            </div>
+          )}
 
           {selectedRole !== 'customer' && (
             <div className="border-2 border-dashed border-foreground px-4 py-3 text-sm" style={{ fontFamily: 'var(--font-mono)', fontSize: '11px' }}>

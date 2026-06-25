@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
-import { ChevronLeft, MapPin, CreditCard, Banknote, CheckCircle } from 'lucide-react';
+import { ChevronLeft, MapPin, CreditCard, Banknote, CheckCircle, UserCircle } from 'lucide-react';
 import { useCart } from './CartContext';
+import { useAuth } from './AuthContext';
 
 function formatPrice(price: number) {
   return price.toLocaleString('vi-VN') + '₫';
@@ -9,12 +10,13 @@ function formatPrice(price: number) {
 
 export function CheckoutPage() {
   const { items, totalPrice, clearCart } = useCart();
+  const { user } = useAuth();
   const navigate = useNavigate();
   const [step, setStep] = useState(1);
   const [paymentMethod, setPaymentMethod] = useState<'cash' | 'card' | 'momo'>('cash');
-  const [address, setAddress] = useState('');
-  const [phone, setPhone] = useState('');
-  const [name, setName] = useState('');
+  const [address, setAddress] = useState(user?.address ?? '');
+  const [phone, setPhone] = useState(user?.phone ?? '');
+  const [name, setName] = useState(user?.name ?? '');
   const [note, setNote] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -87,6 +89,15 @@ export function CheckoutPage() {
             <div className="space-y-5">
               <h2 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: '22px' }}>Địa Chỉ Giao Hàng</h2>
 
+              {user && (
+                <div className="flex items-center gap-2 border border-border bg-secondary px-3 py-2.5">
+                  <UserCircle size={14} className="shrink-0 text-muted-foreground" />
+                  <p style={{ fontFamily: 'var(--font-mono)', fontSize: '11px', color: 'var(--muted-foreground)' }}>
+                    Đã điền từ tài khoản <strong style={{ color: 'var(--foreground)' }}>{user.name}</strong> — bạn có thể chỉnh sửa nếu cần.
+                  </p>
+                </div>
+              )}
+
               <div className="space-y-1">
                 <label className="text-xs uppercase tracking-wider text-muted-foreground" style={{ fontFamily: 'var(--font-mono)' }}>Họ và tên *</label>
                 <input
@@ -156,7 +167,7 @@ export function CheckoutPage() {
 
               <div className="space-y-3">
                 {[
-                  { id: 'cash', label: 'Tiền mặt khi nhận hàng', desc: 'Trả tiền trực tiếp cho tài xế', Icon: Banknote },
+                  { id: 'cash', label: 'COD', desc: 'Trả tiền trực tiếp cho tài xế', Icon: Banknote },
                   { id: 'card', label: 'Thẻ ngân hàng / VISA', desc: 'Thanh toán online an toàn', Icon: CreditCard },
                   { id: 'momo', label: 'Ví MoMo', desc: 'Thanh toán qua ứng dụng MoMo', Icon: CreditCard },
                 ].map(({ id, label, desc, Icon }) => (
@@ -210,7 +221,7 @@ export function CheckoutPage() {
               <div className="border-2 border-foreground p-4">
                 <h3 className="text-xs uppercase tracking-wider text-muted-foreground mb-2" style={{ fontFamily: 'var(--font-mono)' }}>Phương thức</h3>
                 <p style={{ fontFamily: 'var(--font-body)', fontSize: '14px', fontWeight: 600 }}>
-                  {paymentMethod === 'cash' ? 'Tiền mặt khi nhận' : paymentMethod === 'card' ? 'Thẻ ngân hàng' : 'Ví MoMo'}
+                  {paymentMethod === 'cash' ? 'COD' : paymentMethod === 'card' ? 'Thẻ ngân hàng' : 'Ví MoMo'}
                 </p>
               </div>
 

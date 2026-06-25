@@ -21,17 +21,16 @@ export function DishDetailModal({ dish, onClose }: DishDetailModalProps) {
   if (!dish) return null;
 
   const handleAdd = () => {
-    for (let i = 0; i < quantity; i++) {
-      addItem({
-        dishId: dish.id,
-        dishName: dish.name,
-        restaurantId: dish.restaurantId,
-        restaurantName: dish.restaurantName,
-        price: dish.price,
-        quantity: 1,
-        image: dish.image,
-      });
-    }
+    addItem({
+      dishId: dish.id,
+      dishName: dish.name,
+      restaurantId: dish.restaurantId,
+      restaurantName: dish.restaurantName,
+      price: dish.price,
+      quantity,
+      image: dish.image,
+      note: note.trim() || undefined,
+    });
     onClose();
   };
 
