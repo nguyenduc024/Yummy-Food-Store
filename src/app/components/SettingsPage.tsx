@@ -244,6 +244,31 @@ export function SettingsPage() {
         </div>
       )}
 
+      {/* Rejection banner */}
+      {user.profileStatus === 'rejected' && user.rejectionReason && (
+        <div className="border-2 border-destructive bg-destructive/5 p-4 mb-6">
+          <div className="flex items-start gap-2">
+            <XCircle size={16} className="text-destructive shrink-0 mt-0.5" />
+            <div>
+              <p className="text-destructive" style={{ fontFamily: 'var(--font-mono)', fontWeight: 700, fontSize: '12px', letterSpacing: '0.05em' }}>
+                HỒ SƠ BỊ TỪ CHỐI
+              </p>
+              <p style={{ fontFamily: 'var(--font-body)', fontSize: '13px', marginTop: '4px' }}>
+                Lý do: <span className="font-semibold">{user.rejectionReason}</span>
+              </p>
+              {user.rejectedAt && (
+                <p className="text-muted-foreground" style={{ fontFamily: 'var(--font-mono)', fontSize: '10px', marginTop: '4px' }}>
+                  Từ chối lúc: {new Date(user.rejectedAt).toLocaleString('vi-VN')}
+                </p>
+              )}
+              <p className="text-muted-foreground" style={{ fontFamily: 'var(--font-mono)', fontSize: '10px', marginTop: '2px' }}>
+                Vui lòng bổ sung thông tin và nộp lại hồ sơ.
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Profile card */}
       <div className="border-2 border-foreground p-5 mb-6 flex items-center gap-4">
         <div className="w-14 h-14 border-2 border-foreground flex items-center justify-center shrink-0">

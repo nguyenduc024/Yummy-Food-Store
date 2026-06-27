@@ -47,6 +47,8 @@ export function AdminDashboard() {
   const [expandedUserId, setExpandedUserId] = useState<string | null>(null);
   const [lockModalUserId, setLockModalUserId] = useState<string | null>(null);
   const [lockReason, setLockReason] = useState('');
+  const [rejectModalUserId, setRejectModalUserId] = useState<string | null>(null);
+  const [rejectReason, setRejectReason] = useState('');
 
   // Review tab state
   const [reviewFilter, setReviewFilter] = useState<'all' | 'reported' | 'hidden'>('all');
@@ -107,8 +109,16 @@ export function AdminDashboard() {
     load();
   };
   const handleReject = (userId: string) => {
-    rejectUser(userId);
+    setRejectModalUserId(userId);
+    setRejectReason('');
+  };
+
+  const handleConfirmReject = () => {
+    if (!rejectModalUserId || !rejectReason.trim()) return;
+    rejectUser(rejectModalUserId, rejectReason.trim());
     toast.success('Đã từ chối tài khoản');
+    setRejectModalUserId(null);
+    setRejectReason('');
     load();
   };
   const handleUnlock = (userId: string) => {
@@ -333,6 +343,19 @@ export function AdminDashboard() {
                         </>
                       )}
                       <p style={{ fontFamily: 'var(--font-mono)', fontSize: '11px' }}>ID: {u.id}</p>
+
+                      {/* Rejection reason */}
+                      {u.profileStatus === 'rejected' && u.rejectionReason && (
+                        <div className="mt-3 pt-3 border-t border-dashed border-border">
+                          <p style={{ fontFamily: 'var(--font-mono)', fontSize: '10px', letterSpacing: '0.08em', color: 'var(--muted-foreground)', marginBottom: '6px' }}>LÝ DO TỪ CHỐI</p>
+                          <p style={{ fontFamily: 'var(--font-body)', fontSize: '12px' }}>{u.rejectionReason}</p>
+                          {u.rejectedAt && (
+                            <p className="text-muted-foreground" style={{ fontFamily: 'var(--font-mono)', fontSize: '10px', marginTop: '3px' }}>
+                              {new Date(u.rejectedAt).toLocaleString('vi-VN')}
+                            </p>
+                          )}
+                        </div>
+                      )}
 
                       {/* Lock history */}
                       {(u.lockHistory?.length ?? 0) > 0 && (
@@ -670,6 +693,53 @@ export function AdminDashboard() {
                 style={{ fontFamily: 'var(--font-mono)', fontSize: '12px', fontWeight: 700 }}
               >
                 XÁC NHẬN KHÓA
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ── Reject account modal ── */}
+      {rejectModalUserId && (
+        <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4">
+          <div className="bg-background border-2 border-foreground w-full max-w-sm p-6">
+            <div className="flex items-center gap-2 mb-1">
+              <XCircle size={16} />
+              <h3 style={{ fontFamily: 'var(--font-display)', fontWeight: 900, fontSize: '22px' }}>Từ chối hồ sơ</h3>
+            </div>
+            <p className="text-muted-foreground mb-4" style={{ fontFamily: 'var(--font-mono)', fontSize: '11px' }}>
+              {users.find(u => u.id === rejectModalUserId)?.name} — {users.find(u => u.id === rejectModalUserId)?.phone}
+            </p>
+            <label style={{ fontFamily: 'var(--font-mono)', fontSize: '10px', color: 'var(--muted-foreground)', display: 'block', marginBottom: '6px' }}>
+              LÝ DO TỪ CHỐI *
+            </label>
+            <textarea
+              value={rejectReason}
+              onChange={e => setRejectReason(e.target.value)}
+              placeholder="Nhập lý do từ chối (ví dụ: Thiếu giấy phép kinh doanh, ảnh không hợp lệ...)..."
+              rows={3}
+              autoFocus
+              className="w-full border-2 border-foreground px-3 py-2.5 bg-secondary outline-none focus:border-accent mb-4 resize-none"
+              style={{ fontFamily: 'var(--font-body)', fontSize: '13px' }}
+            />
+            <p className="text-accent mb-4" style={{ fontFamily: 'var(--font-mono)', fontSize: '10px' }}>
+              Lý do này sẽ hiển thị cho người dùng để họ biết cần bổ sung gì.
+            </p>
+            <div className="flex gap-2">
+              <button
+                onClick={() => { setRejectModalUserId(null); setRejectReason(''); }}
+                className="flex-1 border-2 border-foreground py-2.5 hover:bg-secondary transition-colors"
+                style={{ fontFamily: 'var(--font-mono)', fontSize: '12px' }}
+              >
+                HỦY
+              </button>
+              <button
+                onClick={handleConfirmReject}
+                disabled={!rejectReason.trim()}
+                className="flex-1 bg-destructive text-background py-2.5 hover:opacity-90 transition-opacity disabled:opacity-40 disabled:cursor-not-allowed"
+                style={{ fontFamily: 'var(--font-mono)', fontSize: '12px', fontWeight: 700 }}
+              >
+                XÁC NHẬN TỪ CHỐI
               </button>
             </div>
           </div>

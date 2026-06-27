@@ -133,8 +133,8 @@ export function RestaurantDashboard() {
 
   // Confirm order
   const handleConfirm = (orderId: string) => {
-    updateOrderStatus(orderId, 'confirmed');
-    toast.success('Đã xác nhận đơn hàng');
+    updateOrderStatus(orderId, 'finding_driver');
+    toast.success('Đã xác nhận — đang tìm tài xế');
     load();
   };
 

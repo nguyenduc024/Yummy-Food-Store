@@ -36,6 +36,8 @@ export interface User {
   createdAt: string;
   isLocked?: boolean;
   lockHistory?: LockRecord[];
+  rejectionReason?: string;
+  rejectedAt?: string;
 }
 
 export interface RegisterData {

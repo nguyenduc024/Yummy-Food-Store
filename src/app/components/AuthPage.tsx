@@ -80,7 +80,11 @@ export function AuthPage() {
       return;
     }
 
-    navigate('/');
+    const dest = result.role === 'restaurant' ? '/restaurant'
+      : result.role === 'shipper' ? '/shipper'
+      : result.role === 'admin' ? '/admin'
+      : '/';
+    navigate(dest);
   };
 
   const handleForgotPhoneChange = (value: string) => {

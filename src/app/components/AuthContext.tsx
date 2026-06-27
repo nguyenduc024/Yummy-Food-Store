@@ -15,7 +15,7 @@ import {
 interface AuthContextValue {
   user: User | null;
   isAuthenticated: boolean;
-  login: (phone: string, password: string) => { success: boolean; error?: string };
+  login: (phone: string, password: string) => { success: boolean; error?: string; role?: User['role'] };
   register: (data: RegisterData) => { success: boolean; user?: User; error?: string; phoneExists?: boolean };
   logout: () => void;
   updateProfile: (data: { name?: string; address?: string }) => { success: boolean; error?: string };
@@ -47,7 +47,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       return { success: false, error: 'Số điện thoại hoặc mật khẩu không đúng' };
     }
     setUser(result.user);
-    return { success: true };
+    return { success: true, role: result.user.role };
   };
 
   const register = (data: RegisterData) => {

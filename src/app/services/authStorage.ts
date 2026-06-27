@@ -32,7 +32,9 @@ export function findUserByPhone(phone: string): User | undefined {
 export function getCurrentUser(): User | null {
   const userId = localStorage.getItem(SESSION_KEY);
   if (!userId) return null;
-  return getUsers().find(u => u.id === userId) ?? null;
+  const user = getUsers().find(u => u.id === userId) ?? null;
+  if (user?.isLocked) { setSession(null); return null; }
+  return user;
 }
 
 export function setSession(userId: string | null): void {
@@ -142,11 +144,16 @@ export function approveUser(userId: string): { success: boolean } {
   return { success: true };
 }
 
-export function rejectUser(userId: string): { success: boolean } {
+export function rejectUser(userId: string, reason: string): { success: boolean } {
   const users = getUsers();
   const idx = users.findIndex(u => u.id === userId);
   if (idx === -1) return { success: false };
-  users[idx] = { ...users[idx], profileStatus: 'rejected' };
+  users[idx] = {
+    ...users[idx],
+    profileStatus: 'rejected',
+    rejectionReason: reason,
+    rejectedAt: new Date().toISOString(),
+  };
   saveUsers(users);
   return { success: true };
 }
