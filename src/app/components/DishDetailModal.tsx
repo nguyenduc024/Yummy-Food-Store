@@ -1,6 +1,7 @@
-import { X, Plus, Minus, Star, Clock, MapPin } from 'lucide-react';
+import { X, Plus, Minus, Star, Clock, MapPin, ExternalLink } from 'lucide-react';
 import { useState } from 'react';
-import { Dish } from '../data/mockData';
+import { useNavigate } from 'react-router';
+import { Dish, restaurants } from '../data/mockData';
 import { useCart } from './CartContext';
 import * as Dialog from '@radix-ui/react-dialog';
 
@@ -17,6 +18,8 @@ export function DishDetailModal({ dish, onClose }: DishDetailModalProps) {
   const [quantity, setQuantity] = useState(1);
   const [note, setNote] = useState('');
   const { addItem } = useCart();
+  const navigate = useNavigate();
+  const restaurant = dish ? restaurants.find(r => r.id === dish.restaurantId) : null;
 
   if (!dish) return null;
 
@@ -72,9 +75,27 @@ export function DishDetailModal({ dish, onClose }: DishDetailModalProps) {
               <Dialog.Title style={{ fontFamily: 'var(--font-display)', fontWeight: 900, fontSize: '24px', lineHeight: 1.1 }}>
                 {dish.name}
               </Dialog.Title>
-              <p className="text-muted-foreground text-sm mt-1" style={{ fontFamily: 'var(--font-mono)' }}>
-                {dish.restaurantName}
-              </p>
+              <div className="flex items-start justify-between gap-3 mt-2">
+                <div className="min-w-0">
+                  <p className="font-semibold text-sm truncate" style={{ fontFamily: 'var(--font-mono)' }}>
+                    {dish.restaurantName}
+                  </p>
+                  {restaurant?.address && (
+                    <p className="flex items-center gap-1 mt-0.5 text-muted-foreground" style={{ fontFamily: 'var(--font-mono)', fontSize: '11px' }}>
+                      <MapPin size={10} className="shrink-0" />
+                      <span className="truncate">{restaurant.address}</span>
+                    </p>
+                  )}
+                </div>
+                <button
+                  onClick={() => { onClose(); navigate(`/restaurant/${dish.restaurantId}`); }}
+                  className="shrink-0 flex items-center gap-1 border border-foreground px-2 py-1 hover:bg-foreground hover:text-background transition-colors"
+                  style={{ fontFamily: 'var(--font-mono)', fontSize: '10px', whiteSpace: 'nowrap' }}
+                >
+                  <ExternalLink size={10} />
+                  Xem quán
+                </button>
+              </div>
             </div>
 
             {/* Meta */}
