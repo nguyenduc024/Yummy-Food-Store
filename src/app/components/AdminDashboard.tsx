@@ -222,7 +222,7 @@ export function AdminDashboard() {
             { label: 'CHỜ DUYỆT', value: pendingUsers.length.toString(), color: pendingUsers.length > 0 ? 'text-accent' : '' },
             { label: 'ĐƠN HOÀN THÀNH', value: completedOrders.length.toString() },
             { label: 'DOANH THU', value: formatPrice(totalRevenue), color: 'text-green-700' },
-            { label: 'ĐÁNH GIÁ BỊ BÁO', value: reviews.filter(r => (r.reportedBy?.length ?? 0) > 0).length.toString(), color: 'text-accent' },
+            { label: 'ĐÁNH GIÁ BỊ BÁO CÁO', value: reviews.filter(r => (r.reportedBy?.length ?? 0) > 0).length.toString(), color: 'text-accent' },
           ].map(({ label, value, color }) => (
             <div key={label}>
               <p style={{ fontFamily: 'var(--font-mono)', fontSize: '10px', color: 'var(--muted-foreground)' }}>{label}</p>
