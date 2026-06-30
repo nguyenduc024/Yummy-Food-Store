@@ -37,7 +37,7 @@ export function DishCard({ dish, onSelect }: DishCardProps) {
 
   return (
     <div
-      className="border-2 border-foreground bg-card cursor-pointer group hover:-translate-y-0.5 hover:shadow-[4px_4px_0px_#111111] transition-all duration-150"
+      className="border-2 border-foreground bg-card cursor-pointer group hover:-translate-y-0.5 hover:shadow-[4px_4px_0px_var(--foreground)] transition-all duration-150"
       onClick={() => onSelect(dish)}
     >
       {/* Image */}

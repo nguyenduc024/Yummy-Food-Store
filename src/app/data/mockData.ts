@@ -2,6 +2,7 @@ import phoBoImg from '../../../assest/phở bò.jpg';
 import phoGaImg from '../../../assest/phở gà.jpg';
 import banhMiHoiAnImg from '../../../assest/bánh mì.jpg';
 import lauEchImg from '../../../assest/lẩu ếch.jpeg';
+import sinhToBo from '../../../assest/sinh tố bơ mật ong.jpg';
 
 export interface Restaurant {
   id: string;
@@ -251,7 +252,7 @@ export const restaurants: Restaurant[] = [
       {
         name: 'Sinh Tố',
         items: [
-          { id: 'm16', name: 'Sinh Tố Bơ Mật Ong', price: 55000, description: 'Bơ Đắk Lắk chín mềm xay với mật ong rừng và sữa tươi', image: 'https://images.unsplash.com/photo-1572490122747-3e9c1a6a4e48?w=400&h=300&fit=crop&auto=format', isPopular: true, ingredients: ['Bơ Đắk Lắk', 'Mật ong rừng', 'Sữa tươi', 'Đá'], portionSize: '400ml' },
+          { id: 'm16', name: 'Sinh Tố Bơ Mật Ong', price: 55000, description: 'Bơ Đắk Lắk chín mềm xay với mật ong rừng và sữa tươi', image: sinhToBo, isPopular: true, ingredients: ['Bơ Đắk Lắk', 'Mật ong rừng', 'Sữa tươi', 'Đá'], portionSize: '400ml' },
         ],
       },
       {
@@ -484,7 +485,7 @@ export const dishes: Dish[] = [
     label: 'Best value',
     labelReason: 'Bơ nguyên chất 100% — không pha nước, không đường nhân tạo.',
     category: 'healthy',
-    image: 'https://images.unsplash.com/photo-1572490122747-3e9c1a6a4e48?w=500&h=350&fit=crop&auto=format',
+    image: sinhToBo,
   },
   {
     id: 'd11',
